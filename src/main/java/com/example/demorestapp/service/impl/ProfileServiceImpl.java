@@ -1,14 +1,14 @@
 package com.example.demorestapp.service.impl;
 
+import com.example.demorestapp.exception.RecordNotFoundException;
 import com.example.demorestapp.model.Profile;
 import com.example.demorestapp.repository.ProfileRepository;
 import com.example.demorestapp.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
@@ -21,30 +21,33 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Profile createProfile(Profile profile) {
+    public Profile saveProfile(Profile profile) {
         return profileRepository.save(profile);
     }
 
     @Override
-    public Optional<Profile> fetchLastCreatedProfile() {
+    public Profile fetchLastCreatedProfile() {
         return profileRepository
                 .findAll(PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "created")))
                 .stream()
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> new RecordNotFoundException("There are no profile records"));
     }
 
     @Override
-    public Page<Profile> fetchProfiles(int page, int size) {
-        return profileRepository.findAll(PageRequest.of(page, size));
+    public List<Profile> fetchProfiles(int page, int size) {
+        return profileRepository.findAll(PageRequest.of(page, size, Sort.by("id"))).getContent();
     }
 
     @Override
-    public Optional<Profile> fetchProfile(int id) {
-        return profileRepository.findById(id);
+    public Profile fetchProfile(int id) {
+        return profileRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Profile with id " + id + " not found"));
     }
 
     @Override
-    public Optional<Profile> fetchProfileByEmail(String email) {
-        return profileRepository.findByEmail(email);
+    public Profile fetchProfileByEmail(String email) {
+        return profileRepository.findByEmail(email)
+                .orElseThrow(() -> new RecordNotFoundException("Profile with email " + email + " not found"));
     }
 }

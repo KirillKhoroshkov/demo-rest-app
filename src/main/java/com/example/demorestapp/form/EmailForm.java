@@ -1,12 +1,7 @@
 package com.example.demorestapp.form;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
 public class EmailForm {
 
-    @Email
-    @NotBlank
     private String email;
 
     public String getEmail() {

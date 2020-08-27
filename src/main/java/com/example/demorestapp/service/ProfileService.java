@@ -1,18 +1,17 @@
 package com.example.demorestapp.service;
 
 import com.example.demorestapp.model.Profile;
-import org.springframework.data.domain.Page;
-import java.util.Optional;
+import java.util.List;
 
 public interface ProfileService {
 
-    Profile createProfile(Profile profile);
+    Profile saveProfile(Profile profile);
 
-    Optional<Profile> fetchLastCreatedProfile();
+    Profile fetchLastCreatedProfile();
 
-    Page<Profile> fetchProfiles(int page, int size);
+    List<Profile> fetchProfiles(int page, int size);
 
-    Optional<Profile> fetchProfile(int id);
+    Profile fetchProfile(int id);
 
-    Optional<Profile> fetchProfileByEmail(String email);
+    Profile fetchProfileByEmail(String email);
 }

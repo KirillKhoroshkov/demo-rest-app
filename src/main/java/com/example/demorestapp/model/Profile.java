@@ -43,26 +43,32 @@ public class Profile {
         this.id = id;
     }
 
+    @JsonProperty
     public String getName() {
         return name;
     }
 
+    @JsonProperty
     public void setName(String name) {
         this.name = name;
     }
 
+    @JsonProperty
     public String getEmail() {
         return email;
     }
 
+    @JsonProperty
     public void setEmail(String email) {
         this.email = email;
     }
 
+    @JsonProperty
     public Integer getAge() {
         return age;
     }
 
+    @JsonProperty
     public void setAge(Integer age) {
         this.age = age;
     }
@@ -73,7 +79,7 @@ public class Profile {
     }
 
     @JsonIgnore
-    public void setCreated(Timestamp created) {
+    private void setCreated(Timestamp created) {
         this.created = created;
     }
 }
